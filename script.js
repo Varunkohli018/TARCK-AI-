@@ -2,6 +2,7 @@ const chatForm = document.getElementById("chatForm");
 const userInput = document.getElementById("userInput");
 const chatBox = document.getElementById("chatBox");
 
+// 1. Actual API call logic
 async function getBotReply(message) {
   try {
     const response = await fetch("https://your-api-url.com/chat", {
@@ -16,13 +17,17 @@ async function getBotReply(message) {
     });
 
     const data = await response.json();
+
+    // Update this line based on API response structure
     return data.reply || "No reply received.";
   } catch (error) {
     console.error("API error:", error);
     return "Sorry, I couldn't reach the server.";
   }
 }
-chatForm.addEventListener("submit", function (e) {
+
+// 2. Handle form submission
+chatForm.addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const userMsg = userInput.value.trim();
@@ -33,15 +38,19 @@ chatForm.addEventListener("submit", function (e) {
   userDiv.className = "user-msg";
   userDiv.textContent = userMsg;
   chatBox.appendChild(userDiv);
-
   userInput.value = "";
 
-  // Simulate AI response
-  setTimeout(() => {
-    const botDiv = document.createElement("div");
-    botDiv.className = "bot-msg";
-    botDiv.textContent = getBotReply(userMsg);
-    chatBox.appendChild(botDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }, 500);
+  // Add a temporary "typing..." message
+  const loadingDiv = document.createElement("div");
+  loadingDiv.className = "bot-msg";
+  loadingDiv.textContent = "Thinking...";
+  chatBox.appendChild(loadingDiv);
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  // Get reply from API
+  const reply = await getBotReply(userMsg);
+
+  // Replace "Thinking..." with actual reply
+  loadingDiv.textContent = reply;
+  chatBox.scrollTop = chatBox.scrollHeight;
 });
