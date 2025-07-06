@@ -9,7 +9,7 @@ async function getBotReply(message) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": sk-proj-wcIqBozFCPi7FClE3YbShy5Uf-eQIAOqsi19_6tmXwY1lgJzd8r-4DqY6NSXatSd2Ets2cpJ0VT3BlbkFJ8r__1WOm4uNLfCP-l3tygCtgQ_jNd1Rnr2ZZnnRaFR9AP6WysbbMI0fFvKNQRuCZLD78VXQMEAsk-proj-wcIqBozFCPi7FClE3YbShy5Uf-eQIAOqsi19_6tmXwY1lgJzd8r-4DqY6NSXatSd2Ets2cpJ0VT3BlbkFJ8r__1WOm4uNLfCP-l3tygCtgQ_jNd1Rnr2ZZnnRaFR9AP6WysbbMI0fFvKNQRuCZLD78VXQMEA
+        "Authorization": "Bearer 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"
       },
       body: JSON.stringify({
         prompt: message
@@ -17,9 +17,7 @@ async function getBotReply(message) {
     });
 
     const data = await response.json();
-
-    // Update this line based on API response structure
-    return data.reply || "No reply received.";
+    return data.reply || "No reply received."; // 🔄 You may need to adjust this line
   } catch (error) {
     console.error("API error:", error);
     return "Sorry, I couldn't reach the server.";
