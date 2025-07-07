@@ -4,7 +4,7 @@ const chatBox = document.getElementById("chatBox");
 
 async function getBotReply(message) {
   try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+     const response = await fetch("https://contect-greenchat-api-cxg9.onrender.com/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
