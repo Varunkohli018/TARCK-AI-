@@ -4,23 +4,18 @@ const chatBox = document.getElementById("chatBox");
 
 async function getBotReply(message) {
   try {
-     const response = await fetch("https://contect-greenchat-api-cxg9.onrender.com/chat", {
+    const response = await fetch("https://contect-greenchat-api-cxg9.onrender.com/chat", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer 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.
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [
-          { role: "system", content: "You are a helpful assistant." },
-          { role: "user", content: message }
-        ]
+        prompt: message
       })
     });
 
     const data = await response.json();
-    return data.choices[0].message.content.trim();
+    return data.reply || "No reply received.";
   } catch (error) {
     console.error("API error:", error);
     return "Sorry, I couldn't reach the server.";
