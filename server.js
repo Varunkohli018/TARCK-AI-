@@ -1,42 +1,41 @@
-const express = require('express');
-const fetch = require('node-fetch');
-const cors = require('cors');
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const { Configuration, OpenAIApi } = require("openai");
 
 const app = express();
+const port = process.env.PORT || 3000;
+
 app.use(cors());
-app.use(express.json());
+app.use(bodyParser.json());
 
-const API_KEY = process.env.OPENAI_API_KEY;
+// 🔐 Put your secret OpenAI API key here (but DO NOT expose this key in frontend!)
+const configuration = new Configuration({
+  apiKey: "sk-proj-xxxx...your_secret_key_here...",
+});
+const openai = new OpenAIApi(configuration);
 
-app.post('/chat', async (req, res) => {
-  const userMessage = req.body.prompt;
+// ✅ Main route that handles prompt
+app.post("/chat", async (req, res) => {
+  const { prompt } = req.body;
 
   try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_KEY}`
-      },
-      body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
-        messages: [
-          { role: 'system', content: 'You are a helpful assistant.' },
-          { role: 'user', content: userMessage }
-        ]
-      })
+    const completion = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [
+        { role: "system", content: "You are a helpful assistant." },
+        { role: "user", content: prompt },
+      ],
     });
 
-    const data = await response.json();
-    res.json({ reply: data.choices[0].message.content.trim() });
+    res.json({ reply: completion.data.choices[0].message.content.trim() });
   } catch (error) {
-    console.error('Backend error:', error);
-    res.status(500).json({ reply: 'Server error. Please try again.' });
+    console.error("OpenAI API error:", error.response?.data || error.message);
+    res.status(500).json({ reply: "Something went wrong with the AI." });
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`GreenChat API server running on port ${PORT}`);
+// Start the server
+app.listen(port, () => {
+  console.log(`GreenChat API server running on port ${port}`);
 });
