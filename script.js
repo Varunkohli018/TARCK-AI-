@@ -4,19 +4,15 @@ const chatBox = document.getElementById("chatBox");
 
 async function getBotReply(message) {
   try {
-    const response = await fetch("https://contect-greenchat-api-cxg9.onrender.com/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-  model: "gpt-3.5-turbo",
-  messages: [
-    { role: "system", content: "You are a helpful assistant." },
-    { role: "user", content: message }
-  ]
-})
+    const response = await fetch("https://contect-grenenbot-ai.onrender.com/chat", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    prompt: message  // 👈 'prompt' hona chahiye key, 'message' nahi
+  })
+});
       
     const data = await response.json();
     return data.reply || "No reply received.";
