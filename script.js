@@ -9,11 +9,15 @@ async function getBotReply(message) {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        prompt: message
-      })
-    });
 
+      body: JSON.stringify({
+  model: "gpt-3.5-turbo",
+  messages: [
+    { role: "system", content: "You are a helpful assistant." },
+    { role: "user", content: message }
+  ]
+})
+      
     const data = await response.json();
     return data.reply || "No reply received.";
   } catch (error) {
