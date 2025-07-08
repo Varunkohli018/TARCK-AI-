@@ -1,79 +1,76 @@
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #e6f5e6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #e8f5e9;
 }
 
-.chat-container {
-  width: 100%;
-  max-width: 450px;
-  background: white;
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 128, 0, 0.2);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 20px;
 }
 
-header {
-  background: #2e7d32;
-  color: white;
-  padding: 15px;
+h1 {
   text-align: center;
+  color: #2e7d32;
 }
 
 .chat-box {
-  flex: 1;
-  padding: 15px;
+  height: 400px;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  border: 1px solid #a5d6a7;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #f1f8e9;
+  border-radius: 5px;
 }
 
-.bot-msg, .user-msg {
-  padding: 10px 14px;
-  border-radius: 15px;
+.user-msg, .bot-msg {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
   max-width: 80%;
-  word-wrap: break-word;
-}
-
-.bot-msg {
-  background-color: #dcedc8;
-  align-self: flex-start;
 }
 
 .user-msg {
-  background-color: #a5d6a7;
+  background-color: #c8e6c9;
   align-self: flex-end;
+  text-align: right;
+  margin-left: auto;
 }
 
-form {
+.bot-msg {
+  background-color: #a5d6a7;
+  align-self: flex-start;
+  text-align: left;
+  margin-right: auto;
+}
+
+.chat-form {
   display: flex;
-  border-top: 1px solid #ccc;
+  gap: 10px;
 }
 
-form input {
+#userInput {
   flex: 1;
-  padding: 12px;
-  border: none;
-  outline: none;
+  padding: 10px;
+  border: 1px solid #81c784;
+  border-radius: 5px;
   font-size: 16px;
 }
 
-form button {
-  padding: 12px 20px;
-  border: none;
+button {
+  padding: 10px 20px;
   background-color: #388e3c;
   color: white;
-  font-weight: bold;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-form button:hover {
+button:hover {
   background-color: #2e7d32;
 }
