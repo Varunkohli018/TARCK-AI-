@@ -4,16 +4,14 @@ const chatBox = document.getElementById("chatBox");
 
 async function getBotReply(message) {
   try {
-    const response = await fetch("https://contect-grenenbot-ai.onrender.com/chat", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    prompt: message  // 👈 'prompt' hona chahiye key, 'message' nahi
-  })
-});
-      
+    const response = await fetch("https://contect-greenchat-api.onrender.com/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ prompt: message })
+    });
+
     const data = await response.json();
     return data.reply || "No reply received.";
   } catch (error) {
@@ -24,24 +22,25 @@ async function getBotReply(message) {
 
 chatForm.addEventListener("submit", async function (e) {
   e.preventDefault();
-
   const userMsg = userInput.value.trim();
   if (!userMsg) return;
 
+  // User message
   const userDiv = document.createElement("div");
   userDiv.className = "user-msg";
   userDiv.textContent = userMsg;
   chatBox.appendChild(userDiv);
+
   userInput.value = "";
 
-  const loadingDiv = document.createElement("div");
-  loadingDiv.className = "bot-msg";
-  loadingDiv.textContent = "Thinking...";
-  chatBox.appendChild(loadingDiv);
+  // Bot typing placeholder
+  const botDiv = document.createElement("div");
+  botDiv.className = "bot-msg";
+  botDiv.textContent = "Thinking...";
+  chatBox.appendChild(botDiv);
   chatBox.scrollTop = chatBox.scrollHeight;
 
   const reply = await getBotReply(userMsg);
-
-  loadingDiv.textContent = reply;
+  botDiv.textContent = reply;
   chatBox.scrollTop = chatBox.scrollHeight;
 });
